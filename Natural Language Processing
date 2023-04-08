@@ -1,0 +1,38 @@
+import nltk
+from nltk.tokenize import word_tokenize
+from nltk.corpus import stopwords
+from nltk.stem import WordNetLemmatizer
+from collections import Counter
+
+# Download necessary NLTK data
+nltk.download('punkt')
+nltk.download('stopwords')
+nltk.download('wordnet')
+
+# Sample text
+text = "Natural language processing (NLP) is a field of computer science, artificial intelligence, and computational linguistics concerned with the interactions between computers and human languages."
+
+# Tokenize the text into words
+words = word_tokenize(text)
+
+# Filter out stop words
+stop_words = set(stopwords.words('english'))
+filtered_words = [word for word in words if word.lower() not in stop_words]
+
+# Lemmatize the remaining words
+lemmatizer = WordNetLemmatizer()
+lemmatized_words = [lemmatizer.lemmatize(word) for word in filtered_words]
+
+# Calculate the frequency distribution of lemmatized words
+freq_dist = Counter(lemmatized_words)
+
+# Print the original text, the tokenized words, the filtered words, and the lemmatized words
+print("1. Original text: ", text)
+print("2. Tokenized words: ", words)
+print("3. Filtered words: ", filtered_words)
+print("4. Lemmatized words: ", lemmatized_words)
+
+# Print the 10 most common words and their frequencies
+print("\n5. 10 most common words:")
+for i, (word, frequency) in enumerate(freq_dist.most_common(10)):
+    print(f"{i+1}. {word}: {frequency}")
